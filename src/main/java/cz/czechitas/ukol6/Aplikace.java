@@ -12,11 +12,11 @@ public class Aplikace extends JFrame {
 
     private JLabel husyLabel;
 
-    private JTextField husyField;
+    private JSpinner husyField;
 
     private JLabel kraliciLabel;
 
-    private JTextField kraliciField;
+    private JSpinner kraliciField;
 
     private JLabel pocetHlavLabel;
 
@@ -51,18 +51,18 @@ public class Aplikace extends JFrame {
 
         //TODO implementovat formulář podle zadání
 
-        husyField = new JTextField();
+        husyField = new JSpinner();
         husyLabel = new JLabel("Počet hus");
         husyLabel.setDisplayedMnemonic('H');
-        husyField.setHorizontalAlignment(JTextField.TRAILING);
+        //husyField.setHorizontalAlignment(JTextField.TRAILING);
         husyLabel.setLabelFor(husyField);
         add(husyLabel);
         add(husyField);
 
-        kraliciField = new JTextField();
+        kraliciField = new JSpinner();
         kraliciLabel = new JLabel("Počet králíků");
         kraliciLabel.setDisplayedMnemonic('K');
-        kraliciField.setHorizontalAlignment(JTextField.TRAILING);
+        //kraliciField.setHorizontalAlignment(JTextField.TRAILING);
         kraliciLabel.setLabelFor(kraliciField);
         add(kraliciLabel);
         add(kraliciField);
@@ -97,8 +97,8 @@ public class Aplikace extends JFrame {
         vypocitatButton.addActionListener(this::handleVypocitat);
     }
     private void handleVypocitat(ActionEvent actionEvent) {
-        int pocetHusCislo = Integer.parseInt(husyField.getText());
-        int pocetKralikuCislo = Integer.parseInt(kraliciField.getText());
+        int pocetHusCislo = (int) husyField.getValue();
+        int pocetKralikuCislo = (int) husyField.getValue();
         int pocetHlav;
         int pocetNoh;
         pocetHlav = pocetHusCislo + pocetKralikuCislo;
