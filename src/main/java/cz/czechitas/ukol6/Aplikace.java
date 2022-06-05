@@ -5,6 +5,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -49,27 +51,33 @@ public class Aplikace extends JFrame {
         setLayout(new MigLayout("wrap 2", "[right]rel[50:120:150,grow,fill]"));
         setMinimumSize(new Dimension(350, 250));
 
-        //TODO implementovat formulář podle zadání
+        //ODO implementovat formulář podle zadání
+        SpinnerNumberModel modelHusy = new SpinnerNumberModel(1, 0, 100, 1);
+        SpinnerNumberModel modelKralici = new SpinnerNumberModel(1, 0, 100, 1);
 
         husyField = new JSpinner();
         husyLabel = new JLabel("Počet hus");
         husyLabel.setDisplayedMnemonic('H');
+        husyField.setModel(modelHusy);
         //husyField.setHorizontalAlignment(JTextField.TRAILING);
         husyLabel.setLabelFor(husyField);
+
         add(husyLabel);
         add(husyField);
 
         kraliciField = new JSpinner();
         kraliciLabel = new JLabel("Počet králíků");
         kraliciLabel.setDisplayedMnemonic('K');
+        kraliciField.setModel(modelKralici);
         //kraliciField.setHorizontalAlignment(JTextField.TRAILING);
         kraliciLabel.setLabelFor(kraliciField);
+
         add(kraliciLabel);
         add(kraliciField);
 
         vypocitatButton = new JButton("Vypočítat");
         vypocitatButton.setMnemonic('V');
-        add(vypocitatButton,"span");
+        add(vypocitatButton, "span");
 
         pocetHlavField = new JTextField();
         pocetHlavLabel = new JLabel("Počet hlav");
@@ -80,7 +88,6 @@ public class Aplikace extends JFrame {
         pocetHlavField.setHorizontalAlignment(JTextField.TRAILING);
         add(pocetHlavLabel);
         add(pocetHlavField);
-
 
         pocetNohouField = new JTextField();
         pocetNohouLabel = new JLabel("Počet nohou");
@@ -94,24 +101,33 @@ public class Aplikace extends JFrame {
 
         pack();
 
+        husyField.addChangeListener(this::handleChangeHusy);
+        kraliciField.addChangeListener(this::handleChangeKralici);
         vypocitatButton.addActionListener(this::handleVypocitat);
     }
+
+
     private void handleVypocitat(ActionEvent actionEvent) {
         int pocetHusCislo = (int) husyField.getValue();
-        int pocetKralikuCislo = (int) husyField.getValue();
+        int pocetKralikuCislo = (int) kraliciField.getValue();
         int pocetHlav;
         int pocetNoh;
         pocetHlav = pocetHusCislo + pocetKralikuCislo;
-        pocetNoh = pocetHusCislo*2 + pocetKralikuCislo*4;
+        pocetNoh = pocetHusCislo * 2 + pocetKralikuCislo * 4;
         System.out.println("Počítám husy:" + pocetHusCislo);
-        System.out.println("Počítám králiky:" + pocetKralikuCislo);
+        System.out.println("Počítám králíky:" + pocetKralikuCislo);
         System.out.println("Počítám hlavy:" + pocetHlav);
         System.out.println("Počítám nohy:" + pocetNoh);
         pocetHlavField.setText(Integer.toString(pocetHlav));
         pocetNohouField.setText(Integer.toString(pocetNoh));
+    }
 
-
-        }
-
-
+    private void handleChangeHusy(ChangeEvent changeEvent) {
+        JSpinner spinner = (JSpinner) changeEvent.getSource();
+        husyField.setValue(spinner.getValue());
+    }
+    private void handleChangeKralici(ChangeEvent changeEvent) {
+        JSpinner spinner = (JSpinner) changeEvent.getSource();
+        kraliciField.setValue(spinner.getValue());
+    }
 }
